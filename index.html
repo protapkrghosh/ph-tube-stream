@@ -4,6 +4,11 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>PH Tube Stream</title>
+      <link
+         rel="shortcut icon"
+         href="./asset/Logo-icon.png"
+         type="image/x-icon"
+      />
 
       <link
          href="https://cdn.jsdelivr.net/npm/daisyui@5"
@@ -16,27 +21,54 @@
          body {
             font-family: "Inter";
          }
+
+         .active {
+            background: #FF1F3D;
+            color: white;
+         }
       </style>
    </head>
 
    <body>
       <header>
-         <nav class="w-11/12 mx-auto flex justify-between items-center border-b border-[#17171720] pt-9 pb-6 font-medium">
+         <nav
+            class="w-11/12 mx-auto flex justify-between items-center border-b border-[#17171720] pt-9 pb-6 font-medium"
+         >
             <div class="logo cursor-pointer">
-               <img class="w-[95%]" src="./asset/Logo.png" alt="Logo">
+               <img class="w-[95%]" src="./asset/Logo.png" alt="Logo" />
             </div>
 
             <div class="sort">
-               <button class="btn text-[#252525] bg-[#25252533] hover:bg-[#E2E2E2]">Sort By View</button>
+               <button
+                  class="btn text-[#252525] bg-[#25252533] hover:bg-[#E2E2E2]"
+               >
+                  Sort By View
+               </button>
             </div>
-            <div class="blogs btn bg-[#FF1F3D] hover:bg-[#df263e] text-white">Blogs</div>
+            <div class="blogs btn bg-[#FF1F3D] hover:bg-[#df263e] text-white">
+               Blogs
+            </div>
          </nav>
       </header>
 
       <!-- Nav Area -->
-      <nav id="category-container" class="flex justify-center py-6 space-x-6 text-lg font-semibold">
-         <button class="btn btn-sm px-4 bg-[#FF1F3D] text-white">All</button>
+      <nav
+         id="category-container"
+         class="flex justify-center py-6 space-x-6 text-lg font-semibold"
+      >
+         <button id="allVideos" onclick="loadVideos()" class="btn btn-sm px-4">All</button>
       </nav>
+
+      <!-- Video Sections -->
+      <section
+         id="video-container"
+         class="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-6"
+      >
+         <div class="col-span-full flex flex-col justify-center items-center text-center pt-16">
+            <img src="./asset/Icon.png" alt="Icons">
+            <h2 class="text-[#171717] text-3xl font-bold leading-10 mt-8">Oops!! Sorry, There is no <br> content here</h2>
+         </div>
+      </section>
 
       <script src="./script/index.js"></script>
    </body>
