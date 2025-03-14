@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>PH Tube Stream</title>
+
+      <link
+         href="https://cdn.jsdelivr.net/npm/daisyui@5"
+         rel="stylesheet"
+         type="text/css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+      <style>
+         body {
+            font-family: "Inter";
+         }
+      </style>
+   </head>
+
+   <body>
+      <header>
+         <nav class="w-11/12 mx-auto flex justify-between items-center border-b border-[#17171720] pt-9 pb-6 font-medium">
+            <div class="logo cursor-pointer">
+               <img class="w-[95%]" src="./asset/Logo.png" alt="Logo">
+            </div>
+
+            <div class="sort">
+               <button class="btn text-[#252525] bg-[#25252533] hover:bg-[#E2E2E2]">Sort By View</button>
+            </div>
+            <div class="blogs btn bg-[#FF1F3D] hover:bg-[#df263e] text-white">Blogs</div>
+         </nav>
+      </header>
+
+      <!-- Nav Area -->
+      <nav id="category-container" class="flex justify-center py-6 space-x-6 text-lg font-semibold">
+         <button class="btn btn-sm px-4 bg-[#FF1F3D] text-white">All</button>
+      </nav>
+
+      <script src="./script/index.js"></script>
+   </body>
+</html>
