@@ -1,4 +1,14 @@
-function removeActiveBtn() {
+const showLoader = () => {
+   document.getElementById("loader").classList.remove('hidden');
+   document.getElementById("video-container").classList.add("hidden");
+}
+
+const hideLoader = () => {
+   document.getElementById("loader").classList.add('hidden');
+   document.getElementById("video-container").classList.remove("hidden");
+}
+
+function removeActiveClass() {
    const activeButtons = document.getElementsByClassName("active");
 
    for (const btn of activeButtons) {
@@ -12,22 +22,24 @@ function loadCategories() {
       .then((data) => displayCategories(data.categories));
 }
 
-function loadVideos() {
-   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+function loadVideos(searchText = "") {
+   showLoader();
+   fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
       .then((res) => res.json())
       .then((data) => {
-         removeActiveBtn();
+         removeActiveClass();
          document.getElementById("allVideos").classList.add("active");
          displayVideos(data.videos);
       });
 }
 
 const loadCategoriesVideos = (id) => {
+   showLoader();
    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-         removeActiveBtn();
+         removeActiveClass();
          const clickableBtn = document.getElementById(`${id}`);
          clickableBtn.classList.add("active");
          displayVideos(data.category);
@@ -74,6 +86,7 @@ const displayVideos = (videos) => {
             <h2 class="text-[#171717] text-3xl font-bold leading-10 mt-8">Oops!! Sorry, There is no <br> content here</h2>
          </div>
       `;
+      hideLoader();
       return;
    }
 
@@ -114,7 +127,7 @@ const displayVideos = (videos) => {
                         }
                         
                         ${
-                           video.authors[0].verified === true
+                           video.authors[0].verified == true
                               ? `<img 
                               class="w-5 h-5"
                               src="https://img.icons8.com/?size=48&id=QMxOVe0B9VzG&format=png"
@@ -133,11 +146,12 @@ const displayVideos = (videos) => {
 
             <button onclick=loadVideoDetails('${
                video.video_id
-            }') class="btn btn-block">Show Details</button>
+            }') class="btn btn-block mt-4">Show Details</button>
          </div>
       `;
       videoContainer.append(videoCard);
    });
+   hideLoader();
 };
 
 const displayVideoDetails = (video) => {
@@ -163,6 +177,11 @@ const displayVideoDetails = (video) => {
       </div>
    `;
 };
+
+document.getElementById("search-input").addEventListener('keyup', (e) => {
+   const input = e.target.value;
+   loadVideos(input);
+});
 
 loadCategories();
 // loadVideos();
