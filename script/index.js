@@ -1,6 +1,6 @@
 function removeActiveBtn() {
    const activeButtons = document.getElementsByClassName("active");
-   
+
    for (const btn of activeButtons) {
       btn.classList.remove("active");
    }
@@ -17,8 +17,8 @@ function loadVideos() {
       .then((res) => res.json())
       .then((data) => {
          removeActiveBtn();
-         document.getElementById("allVideos").classList.add('active');
-         displayVideos(data.videos)
+         document.getElementById("allVideos").classList.add("active");
+         displayVideos(data.videos);
       });
 }
 
@@ -32,6 +32,13 @@ const loadCategoriesVideos = (id) => {
          clickableBtn.classList.add("active");
          displayVideos(data.category);
       });
+};
+
+const loadVideoDetails = (videoId) => {
+   url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+   fetch(url)
+      .then((res) => res.json())
+      .then((data) => displayVideoDetails(data.video));
 };
 
 function displayCategories(categories) {
@@ -73,7 +80,7 @@ const displayVideos = (videos) => {
    videos.forEach((video) => {
       const videoCard = document.createElement("div");
       videoCard.innerHTML = `
-         <div class="card bg-gray-200">
+         <div class="card">
             <figure class="relative">
                <img
                   src="${video.thumbnail}"
@@ -102,23 +109,59 @@ const displayVideos = (videos) => {
                         ${video.title}
                      </h2>
                      <div class="my-[10px]">
-                        <p class="flex gap-2 text-sm text-[rgba(66,57,57,0.7)]">${video.authors[0].profile_name}
+                        <p class="flex gap-2 text-sm text-[rgba(66,57,57,0.7)]">${
+                           video.authors[0].profile_name
+                        }
                         
-                        <img 
-                           class="w-5 h-5"
-                           src="https://img.icons8.com/?size=48&id=QMxOVe0B9VzG&format=png"
-                           alt="Blue Verified"
-                           />
+                        ${
+                           video.authors[0].verified === true
+                              ? `<img 
+                              class="w-5 h-5"
+                              src="https://img.icons8.com/?size=48&id=QMxOVe0B9VzG&format=png"
+                              alt="Blue Verified"
+                           />` : ""
+                        }
+                        
                         </p>
                      </div>
-                     <p class="text-sm text-[rgba(23,23,23,0.70)] mb-2">${video.others.views} view</p>
+                     <p class="text-sm text-[rgba(23,23,23,0.70)] mb-2">${
+                        video.others.views
+                     } view</p>
                   </div>
                </div>
             </div>
+
+            <button onclick=loadVideoDetails('${
+               video.video_id
+            }') class="btn btn-block">Show Details</button>
          </div>
       `;
       videoContainer.append(videoCard);
    });
+};
+
+const displayVideoDetails = (video) => {
+   document.getElementById("video_details").showModal();
+   const detailsContainer = document.getElementById("details-container");
+   detailsContainer.innerHTML = `
+      <div class="card bg-base-100 image-full shadow-sm">
+         <figure>
+            <img
+               src="${video.thumbnail}"
+               alt="${video.title}" />
+         </figure>
+
+         <div class="card-body">
+            <h2 class="card-title font-bold">${video.title}</h2>
+            <p class="text-justify">${video.description}</p>
+
+            <div>
+               <img src="${video.authors[0].profile_picture}" class="w-20 h-20 rounded-full my-3"/>
+               <p>${video.authors[0].profile_name}</p>
+            </div>
+         </div>
+      </div>
+   `;
 };
 
 loadCategories();
